@@ -5,5 +5,6 @@
 (module
  incubot
  (analyse
-  log-variate-integer)
+  log-variate-integer
+  interesting-tokens)
  (include "analysis.scm"))

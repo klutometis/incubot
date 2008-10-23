@@ -9,13 +9,13 @@
     ((_ x ...)
      (print `((x ,x) ...)))))
 (let ((db (sqlite3:open "log.db")))
-  (let ((insert-saw
+  (let ((insert-author
          (sqlite3:prepare
           db
-          "INSERT INTO saws (saw) VALUES(?);")))
+          "INSERT INTO authors (author) VALUES(?);")))
     (loop
-     ((for saw (in-file "saws-uniq" read-line))
+     ((for author (in-file "authors-uniq" read-line))
       (with tokens 0 (+ tokens 1)))
      (if (zero? (modulo tokens 1000))
          (print tokens))
-     (sqlite3:exec insert-saw saw))))
+     (sqlite3:exec insert-author author))))
