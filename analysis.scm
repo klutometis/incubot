@@ -21,16 +21,40 @@
 (define (analyse saw)
   (let ((db (sqlite3:open "log.db"))
         (tokens (interesting-tokens saw)))
-    (let ((count (sqlite3:prepare
-                  db
-                  "SELECT token_count FROM tokens WHERE token = ? LIMIT 1;")))
-      (sqlite3:with-transaction
-       db
-       (lambda ()
-         (zip tokens
-              (map (lambda (token) (sqlite3:first-result count token))
-                   tokens)))))))
+    (if (null? interesting-tokens)
+        'bored
+        (let ((id-count
+               (sqlite3:prepare
+                db
+                "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
+              (saw-ids
+               (sqlite3:prepare
+                db
+                "SELECT saw_id FROM token_saws WHERE token_id = ?;")))
+          (let* ((token-counts
+                  (zip
+                   tokens
+                   (map
+                    (lambda (token)
+                      (condition-case
+                       (sqlite3:first-row id-count token)
+                       ((exn sqlite3) #f)))
+                    tokens)))
+                 (filtered-tokens (filter cadr token-counts))
+                 (sorted-tokens (sort filtered-tokens > cadadr))
+                 (interesting-token
+                  (if (null? filtered-tokens)
+                      #f
+                      (list-ref filtered-tokens
+                                (log-variate-integer
+                                 (length sorted-tokens))))))
+            (if interesting-token
+                (let* ((token-id (caadr interesting-token))
+                       (saw-ids (sqlite3:map-row values saw-ids token-id)))
+                  (if (null? saw-ids)
+                      'sawless))
+                'incomprehending))))))
 
 ;;; Random integer in [0 .. n - 1] with a logarithmic bias.
 (define (log-variate-integer n)
-  (exact->inexact (floor (log (+ (* (random-real) (- (exp n) 1)) 1)))))
+  (inexact->exact (floor (log (+ (* (random-real) (- (exp n) 1)) 1)))))
