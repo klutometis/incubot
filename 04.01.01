@@ -1,0 +1,141 @@
+00:00:00 --- log: started scheme/04.01.01
+00:14:49 --- quit: isomer ("Client exiting")
+00:14:59 --- join: isomer (~isomer@Ottawa-HSE-ppp254190.sympatico.ca) joined #scheme
+01:15:03 --- quit: bl (Read error: 104 (Connection reset by peer))
+02:52:45 --- join: dondy (~almu@pD9E0F516.dip.t-dialin.net) joined #scheme
+04:29:43 --- join: squire (~vikas@203.129.242.69) joined #scheme
+04:40:22 <Catfive> sarahbot, welcome to 2004.  Hope it works out for you.
+04:40:24 <sarahbot> Do you prefer books or TV? Your dream sounds very alluring....
+04:40:33 <z0d> hi Catfive 
+04:40:34 <sarahbot> Hi there z0d. Umm......Do you like the climate in Atlanta?
+04:41:24 <z0d> sarahbot: I wish I'd know
+04:41:24 <sarahbot> I hope that your dreams come true.
+04:41:47 <z0d> only my good dreams
+04:41:48 <sarahbot> What about the other ones?
+04:43:11 <z0d> there are bad ones. they should never come true
+04:43:12 <sarahbot> Where are they? Why should they?
+04:43:50 <z0d> in my other personality
+04:43:51 <sarahbot> Where did you get that?
+04:44:56 --- quit: zhaoyeming ("What I tell you three times is true.")
+05:04:18 --- join: zhaoyeming (~bryan@sngwebproxy2.core.hp.com) joined #scheme
+05:11:10 --- quit: squire ("Client Exiting")
+05:45:38 --- quit: mmc (Read error: 110 (Connection timed out))
+05:46:05 --- quit: zhaoyeming ("What I tell you three times is true.")
+05:54:24 <FoxFire> sarahbot: be quiet
+05:54:25 <sarahbot> Okay.
+05:56:57 <z0d> FoxFire: sarahbot was quite intelligent today
+06:04:21 <Catfive> sarahbot is very intelligent.
+06:04:22 <sarahbot> Okay.
+06:05:12 <Catfive> sarahbot, what is BOOLE?
+06:05:13 <sarahbot> Someone once said BOOLE is the crowning jewel perched precariously upon the perfect peak of programmer prowess, casting its limitless limpid light over the loathesome lands of those who scuff and wallow in the dreary dust of digital depravity and unbounded wilful ignorance of the testament of Our Lord God as channeled through the X3J13 committee.
+06:05:48 <z0d> uhh
+06:06:09 <z0d> somebody is very creative
+06:14:57 --- join: mmc (~ercmarusk@host32-144.pool80180.interbusiness.it) joined #scheme
+06:27:35 --- join: musasabi (~e@myntti.helsinki.fi) joined #scheme
+06:43:48 --- join: Rotty (~andy@chello213047125140.14.univie.teleweb.at) joined #scheme
+07:04:57 --- quit: dondy (Read error: 113 (No route to host))
+07:15:17 --- quit: jivera (Read error: 101 (Network is unreachable))
+07:28:03 --- join: almu (~almu@pD9E0F516.dip.t-dialin.net) joined #scheme
+08:34:31 --- join: ptlo (~senko@cmung4278.cmu.carnet.hr) joined #scheme
+08:41:52 --- nick: almu -> dondy|afk
+08:42:39 --- quit: dondy|afk ("maeh! :P")
+08:56:20 --- quit: ptlo ("Client exiting")
+09:37:04 --- quit: cow_2001 (Read error: 104 (Connection reset by peer))
+10:17:08 --- join: owll (~victor@ip.82.144.216.237.dyn.pool-1.broadband.voliacable.com) joined #scheme
+10:17:09 --- quit: owll (Client Quit)
+10:37:24 --- join: flippo (~flippo@63.227.116.242) joined #scheme
+10:39:39 --- join: happy|new|year (~b@c-24-6-198-22.client.comcast.net) joined #scheme
+10:40:58 --- join: cow_2001 (~N@bzq-219-146-80.red.bezeqint.net) joined #scheme
+10:52:35 --- quit: happy|new|year ()
+10:58:45 --- join: H0lyD4wg (~b33r@bzq-218-80-147.red.bezeqint.net) joined #scheme
+10:59:55 --- join: cjohnson (~cjohnson@user89.net992.nc.sprint-hsd.net) joined #scheme
+11:49:10 --- quit: cmeme (Read error: 104 (Connection reset by peer))
+11:49:27 --- join: cmeme (~cmeme@216.184.11.30.unused.swcp.com) joined #scheme
+11:51:40 --- quit: cmeme (Remote closed the connection)
+11:52:18 --- join: cmeme (~cmeme@216.184.11.30.unused.swcp.com) joined #scheme
+12:06:53 <Vjaz> I've been frustrated because Guile and mzscheme don't allow me to use my cursor keys for repeating commands or editing them while writing... I was wondering... is there an alternative way to achieve it or some more user friendly intepreter I could use?
+12:07:29 <z0d> I think they use readline for command editing
+12:07:36 <Vjaz> hm... ok
+12:07:57 <H0lyD4wg> Vjaz: you can use cmuscheme mode in emacs
+12:08:32 <Vjaz> hm... emacs... I don't use that... but I guess that's an option...
+12:08:38 <Vjaz> z0d: what's readline?
+12:09:05 <Vjaz> ah I see now
+12:09:23 <z0d> a C library for implementing history editing
+12:09:34 <Vjaz> oh
+12:09:35 <Vjaz> ok
+12:09:36 <z0d> lots of shells use it. other use curses
+12:09:43 <z0d> others
+12:12:54 <Vjaz> hm... the commands described in readline's documentation (C-b, C-f and such) don't seem to work in either one
+12:13:38 <z0d> check with 'ldd' whether it was compiled with libreadline
+12:13:40 <z0d> or curses
+12:16:12 <Vjaz> nope :-p
+12:16:42 <Vjaz> I wonder why?
+12:20:03 <Vjaz> z0d: do readline commands work on your interpreter?
+12:21:06 <z0d> in mzscheme they don't
+12:21:12 <z0d> I don't have gauche
+12:21:23 <z0d> just write your program in Emacs/vim 
+12:22:40 <Vjaz> I will, but I'm still learning it so I'll be widdling around with stuff in the interpreter
+12:26:41 --- join: karingo (karingo@122.portland-24-25rs.or.dial-access.att.net) joined #scheme
+12:26:59 <Catfive> Get the readline extension for mzscheme from the PLT site.
+12:27:31 <Catfive> http://www.cs.utah.edu/plt/develop/
+12:30:46 <Catfive> But the point is that Emacs has the ability to run an interpreter session from -within- it, so that your source file is in one emacs window and the interpreter session in another.  Then you can easily switch back and forth, send definitions from the source file to the interpreter, etc.
+12:31:13 <Catfive> That's the preferred way to do interactive development.
+12:43:02 --- quit: karingo (Read error: 60 (Operation timed out))
+12:45:12 <musasabi> using Emacs is very nice for scheme
+12:49:43 <Vjaz> hm... could be
+12:50:08 <Vjaz> I use Vim for editing though... I guess I could give Emacs a shot though, but it's quite a different beast
+12:55:59 <Riastradh> Vjaz, or you could run the interpreters through ledit.
+12:56:16 <Riastradh> It's an OCaml utility for line editing in any interactive shell-like thihng.
+12:56:18 <Riastradh> Thing, even.
+12:56:33 <Vjaz> hm... ok... sounds promising
+12:58:18 <Catfive> Vjaz, I was/am a hardcore vim user too, but believe me - it's worth learning emacs if only for Lisp development.
+12:58:49 <Vjaz> heh... sounds logical at least
+13:00:40 --- quit: H0lyD4wg ("Leaving")
+13:35:10 <mmc> Vjaz: there's a program, which 'enables readline for any program'
+13:35:29 <mmc> err yes,  ledit.
+13:46:43 --- quit: offby1` (Remote closed the connection)
+14:26:29 --- join: GreyLensman (~ray@68-235-77-74.atlsfl.adelphia.net) joined #scheme
+14:40:13 --- join: jao (~user@103.Red-80-33-152.pooles.rima-tde.net) joined #scheme
+14:41:09 * jao returns from a shorter-than-expected holiday and wishes everybody a happy new year! :)
+14:44:05 --- quit: cow_2001 (Read error: 110 (Connection timed out))
+15:01:12 --- join: lament (~lament@h24-85-63-178.vc.shawcable.net) joined #scheme
+15:09:31 --- join: dondy (~almu@pD9E0F516.dip.t-dialin.net) joined #scheme
+15:13:05 --- join: ptlo (~senko@cmung3354.cmu.carnet.hr) joined #scheme
+15:40:01 --- quit: ptlo ("Client exiting")
+15:52:47 --- quit: jao (Remote closed the connection)
+16:11:37 --- quit: dondy (Read error: 54 (Connection reset by peer))
+16:50:07 --- join: jao (~user@103.Red-80-33-152.pooles.rima-tde.net) joined #scheme
+16:50:13 --- join: isomer` (~isomer@Ottawa-HSE-ppp257054.sympatico.ca) joined #scheme
+16:50:25 --- quit: isomer (Connection timed out)
+16:52:30 --- nick: isomer` -> isomer
+16:53:00 --- quit: Rotty (Remote closed the connection)
+16:53:30 --- join: Rotty (~andy@chello213047125140.14.univie.teleweb.at) joined #scheme
+17:38:39 --- quit: Rotty (Remote closed the connection)
+18:06:13 --- join: isomer` (~isomer@Ottawa-HSE-ppp253582.sympatico.ca) joined #scheme
+18:06:47 --- quit: isomer (Nick collision from services.)
+18:06:58 --- nick: isomer` -> isomer
+18:08:03 --- join: zhaoyeming (~bryan@128.88.255.35) joined #scheme
+18:20:36 --- quit: Verbed ("Leaving")
+18:21:50 --- quit: lament ("leaving")
+19:00:44 --- join: bl (~dickweed@adsl-64-216-16-24.dsl.snantx.swbell.net) joined #scheme
+19:08:21 --- join: flori (ident@pD951E316.dip.t-dialin.net) joined #scheme
+19:17:54 --- join: lament (~lament@h24-85-63-178.vc.shawcable.net) joined #scheme
+19:19:23 --- join: Iorek_away (~h@PW163.neoline.com.br) joined #scheme
+19:20:53 --- quit: flori_ (Read error: 110 (Connection timed out))
+19:20:57 --- nick: Iorek_away -> IorekByrnison
+19:57:11 --- part: IorekByrnison left #scheme
+20:02:41 --- quit: cjohnson ("Got to be good lookin' 'cause he's so hard to see.")
+20:12:56 --- quit: GreyLensman ("Client Exiting")
+20:22:56 --- join: Neural9 (~chatzilla@pool-141-156-187-209.esr.east.verizon.net) joined #scheme
+20:43:05 --- quit: Neural9 ("ChatZilla 0.9.52 [Mozilla rv:1.6b/20031208]")
+20:53:34 --- join: neural9 (~chatzilla@pool-141-156-187-209.esr.east.verizon.net) joined #scheme
+21:03:33 --- quit: zhaoyeming ("What I tell you three times is true.")
+21:05:01 --- quit: neural9 (Read error: 54 (Connection reset by peer))
+22:05:04 --- quit: bl (Read error: 104 (Connection reset by peer))
+22:11:44 --- join: squire (~naserihta@202.142.105.2) joined #scheme
+22:22:54 --- join: bl (~dickweed@adsl-64-216-16-24.dsl.snantx.swbell.net) joined #scheme
+22:33:35 --- quit: squire ()
+23:01:55 --- part: lament left #scheme
+23:04:49 --- join: squire (~naserihta@202.142.105.2) joined #scheme
+23:20:27 --- quit: squire ()
+23:59:59 --- log: ended scheme/04.01.01
