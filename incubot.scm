@@ -5,8 +5,5 @@
 (module
  incubot
  (analyse
-  cumulative-log-distribution
-  log-probability-mass
-  log-concave-variate
-  exponential-variate)
+  log-variate-integer)
  (include "analysis.scm"))

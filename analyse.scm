@@ -7,10 +7,8 @@
     "prob.dat"
   (lambda (port)
     (let write ((i 0))
-      (if (< i 1000)
+      (if (< i 100000)
           (begin
-;;;             (display (exponential-variate 1 (random-real)) port)
-            (display (log (+ (* (random-real) (- (exp 4) 1)) 1)) port)
+            (display (log-variate-integer 10) port)
             (newline port)
             (write (+ i 1)))))))
-;; (log-concave-variate 1 0)
