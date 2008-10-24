@@ -14,9 +14,10 @@
   (> (string-length token) min-length))
 
 (define (interesting-tokens saw)
-  (map process-token
-       (filter filter-token
-               (string-tokenize saw char-set:letter))))
+  (delete-duplicates
+   (map process-token
+        (filter filter-token
+                (string-tokenize saw char-set:letter)))))
 
 (define (analyse saw)
   (let ((db (sqlite3:open "log.db"))
@@ -48,11 +49,13 @@
                       (list-ref filtered-tokens
                                 (log-variate-integer
                                  (length sorted-tokens))))))
+            (debug sorted-tokens)
             (if interesting-token
                 (let* ((token-id (caadr interesting-token))
                        (saw-ids (sqlite3:map-row values saw-ids token-id)))
                   (if (null? saw-ids)
-                      'sawless))
+                      'sawless
+                      saw-ids))
                 'incomprehending))))))
 
 ;;; Random integer in [0 .. n - 1] with a logarithmic bias.

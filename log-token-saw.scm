@@ -12,7 +12,7 @@
   (let ((saws
          (sqlite3:prepare
           db
-          "SELECT saw_id, saw FROM saws LIMIT 10;"))
+          "SELECT saw_id, saw FROM saws;"))
         (insert-token-saw
          (sqlite3:prepare
           db

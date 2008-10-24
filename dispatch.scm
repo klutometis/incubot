@@ -1,0 +1,7 @@
+(define (thread-start/timeout! timeout thread)
+  (let ((thread (thread-start! thread)))
+    (let* ((flag (random-real))
+           (join (thread-join! thread timeout flag)))
+      (if (= join flag)
+          (thread-terminate! thread)
+          join))))
