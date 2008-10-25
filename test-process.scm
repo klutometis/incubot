@@ -3,10 +3,16 @@
  posix
  foof-loop
  (srfi 1 11 18))
+(define reader
+  "(let iter ((value (read)))
+     (if (eof-object? value)
+       value
+       (begin (print (eval value))
+              (iter (read)))))")
 (define (make-timer time thunk)
   (make-thread (lambda () (thread-sleep! time) (thunk))))
 (let-values (((stdout stdin id stderr)
-              (process* "csi -s test-stdin.scm")
+              (process* (format "csi -s test-stdin.scm" reader))
 ;;;               (process* "./test-stdin")
               ))
   (let ((thread

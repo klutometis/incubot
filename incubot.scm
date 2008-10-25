@@ -5,7 +5,8 @@
  regex
  irc
  ports
- (srfi 1 9 11 12 13 18 27 95))
+ foof-loop
+ (srfi 1 9 11 12 13 18 26 27 95))
 (module
  incubot
  (analyse
