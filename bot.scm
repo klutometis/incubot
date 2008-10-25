@@ -52,7 +52,7 @@
          (let ((origin (format "PONG :~A" nick)))
            (lambda ()
              (let iter ()
-               (thread-sleep! 30)
+               (thread-sleep! 15)
                (irc:command connection origin)
                (iter)))))
         (irc:run-message-loop
