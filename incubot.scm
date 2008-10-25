@@ -14,7 +14,8 @@
   interesting-tokens
   make-incubot
   incubot-connect!
-  thread-start/timeout!)
+  thread-start/timeout!
+  maximum-length)
  (include "analysis.scm")
  (include "dispatch.scm")
  (include "bot.scm"))
