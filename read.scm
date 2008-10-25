@@ -2,6 +2,5 @@
   (if (eof-object? value)
       value
       (let ((value (->string (eval value))))
-        (display (substring value 0 (min (string-length value) 257)))
-        (newline)
+        (print (substring value 0 (min (string-length value) 257)))
         (iter (read)))))
