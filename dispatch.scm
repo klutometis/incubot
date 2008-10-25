@@ -9,6 +9,18 @@
 (define (make-timer time thunk)
   (make-thread (lambda () (thread-sleep! time) (thunk))))
 
+(define (interesting? output)
+  (not (eof-object? output)))
+
+(define maximum-length 256)
+
+(define (process-output output)
+  (let ((length (string-length output)))
+     (if (> length maximum-length)
+         (string-append
+          (string-take output maximum-length) "...")
+         output)))
+
 (define (dispatch say string timeout)
   (let-values (((stdout stdin id stderr)
                 (process* "./read")))
@@ -24,8 +36,10 @@
                     (error (read-line stderr)))
                 (close-input-port stdout)
                 (close-input-port stderr)
-                (cond ((not (eof-object? error)) (say error))
-                      ((not (eof-object? output)) (say output)))))))
+                (cond ((interesting? error)
+                       (say (process-output error)))
+                      ((interesting? output)
+                       (say (process-output output))))))))
           (timer
            (make-timer
             timeout
@@ -38,7 +52,7 @@
                  (if (zero? termination)
                      (begin
                        (process-signal id signal/term)
-                       (say "Evaluation timed out."))))
+                       (say (format "Eval ~A timed out." id)))))
                ((exn process) values))))))
       (thread-start! timer)
       (thread-join! timer))))

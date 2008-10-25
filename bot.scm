@@ -48,8 +48,20 @@
          handle
          command: "PRIVMSG"
          body: nick)
+        (irc:add-message-handler! 
+         connection
+         (lambda (msg)
+           (irc:command connection (string-append "PONG :" (car (irc:message-parameters msg)))))
+         tag: 'ping
+         command: "PING")
+        (thread-start! (lambda ()
+                         (let iter ()
+                           (thread-sleep! 10)
+                           (irc:command connection "PONG :")
+                           (print 'OMG)
+                           (iter))))
         (irc:run-message-loop
          connection
-;;;          debug: #t
+         debug: #t
 ;;;          ping: #t
          )))))
