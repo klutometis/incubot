@@ -5,3 +5,11 @@
       (if (= join flag)
           (thread-terminate! thread)
           join))))
+
+(define (eval-file file)
+  (with-input-from-file file
+    (lambda ()
+      (let iter ((value (read)))
+        (if (not (eof-object? value))
+            (begin (print (eval value))
+                   (iter (read))))))))
