@@ -49,12 +49,13 @@
          command: "PRIVMSG"
          body: nick)
         (thread-start!
-         (let ((origin (format "PONG :~A" nick)))
+         (let ((origin (format "PING :~A" nick)))
            (lambda ()
              (let iter ()
-               (thread-sleep! 15)
-               (irc:command connection origin)
+               (thread-sleep! 60)
+               (irc:command connection origin) 
                (iter)))))
         (irc:run-message-loop
          connection
-         debug: #t)))))
+         debug: #t
+         ping: #t)))))
