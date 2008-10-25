@@ -10,5 +10,6 @@
                       server: "localhost"
                       nick: "incubot"
                       real-name: "Incubus Robot")
-                     "#scheme")))
+                     "#scheme"
+                     2)))
   (incubot-connect! bot))

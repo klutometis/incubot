@@ -13,13 +13,16 @@
 (define (filter-token token)
   (> (string-length token) min-length))
 
-(define (interesting-tokens saw)
-  (delete-duplicates
-   (map process-token
-        (filter filter-token
-                (string-tokenize saw char-set:letter)))))
+(define (interesting-tokens saw stop-words)
+  (lset-difference
+   string=?
+   (delete-duplicates
+    (map process-token
+         (filter filter-token
+                 (string-tokenize saw char-set:letter))))
+   stop-words))
 
-(define (analyse saw)
+(define (analyse saw . stop-words)
   (let ((db (sqlite3:open "log.db"))
         (tokens (interesting-tokens saw)))
     (if (null? interesting-tokens)
