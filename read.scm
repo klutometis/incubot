@@ -1,5 +1,7 @@
 (let iter ((value (read)))
   (if (eof-object? value)
       value
-      (begin (pretty-print (eval value))
-             (iter (read)))))
+      (let ((value (->string (eval value))))
+        (display (substring value 0 (min (string-length value) 257)))
+        (newline)
+        (iter (read)))))
