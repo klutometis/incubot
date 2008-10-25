@@ -53,9 +53,9 @@
                      (sender (irc:message-sender message))
                      (body (message-body message)))
                  (let ((query? (string=? receiver nick))
-                       (expression (sexp body)))
+                       (expression? (sexp body)))
                    (let ((destination (if query? sender channel)))
-                     (if expression
+                     (if expression?
                          (thread-start/timeout!
                           timeout
                           (lambda ()
