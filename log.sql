@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS tokens;
 CREATE TABLE tokens(
        token_id INTEGER PRIMARY KEY AUTOINCREMENT,
        token TEXT UNIQUE DEFAULT NULL,
-       token_count INTEGER
+       token_count INTEGER DEFAULT 0
        );
 DROP TABLE IF EXISTS saws;
 CREATE TABLE saws(

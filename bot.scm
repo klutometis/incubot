@@ -41,16 +41,16 @@
                                 (interesting-tokens
                                  body
                                  (list nick))))
-                           (log-tokens
-                            db
-                            sender
-                            interesting-tokens
-                            body)
                            (irc:say
                             connection
                             (string-join
                              interesting-tokens)
-                            destination)))))))))
+                            destination)
+                           (log-tokens
+                            db
+                            sender
+                            interesting-tokens
+                            body)))))))))
         (irc:join connection channel)
         (irc:add-message-handler!
          connection
