@@ -18,6 +18,39 @@
         (car match)
         match)))
 
+(define (exchange-saw db tokens)
+  (let* ((select-token
+          (sqlite3:prepare
+           db
+           "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
+         (token-ids
+          (map
+           (lambda (token)
+             (condition-case
+              (sqlite3:first-row
+               select-token
+               token)
+              ((exn sqlite3) #f)))
+           tokens))
+         (filtered-token-ids
+          (filter values token-ids))
+         (sorted-token-ids
+          (sort filtered-token-ids > cadr)))
+    (debug sorted-token-ids)
+    (if (not (null? sorted-token-ids))
+        (let* ((token-id
+               (car
+                (list-ref sorted-token-ids
+                          (log-variate-integer
+                           (length sorted-token-ids)))))
+               (saw-ids
+                (sqlite3:map-row
+                 values
+                 db
+                 "SELECT saw_id FROM token_saws WHERE token_id = ?;"
+                 token-id)))
+          (debug token-id saw-ids)))))
+
 (define (incubot-connect! incubot)
   (let ((connection (irc:connect (incubot-connection incubot)))
         (channel (incubot-channel incubot))
@@ -41,6 +74,7 @@
                                 (interesting-tokens
                                  body
                                  (list nick))))
+                           (exchange-saw db interesting-tokens)
                            (irc:say
                             connection
                             (string-join

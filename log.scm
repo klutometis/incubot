@@ -19,7 +19,6 @@
            db
            "INSERT INTO saws (saw) VALUES(?);")
           saw)))
-    (debug saw-id)
     (let ((select-token-count
            (sqlite3:prepare
             db
