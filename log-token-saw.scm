@@ -12,14 +12,14 @@
   (let ((saws
          (sqlite3:prepare
           db
-          "SELECT saw_id, saw FROM saws;"))
+          "SELECT saw_id, saw FROM saws WHERE saw_id > 850000 LIMIT 250000;"))
         (insert-token-saw
          (sqlite3:prepare
           db
           "INSERT INTO token_saws (token_id, saw_id) VALUES(?, ?);")))
     (sqlite3:for-each-row
      (lambda (saw-id saw)
-       (let* ((tokens (interesting-tokens saw))
+       (let* ((tokens (interesting-tokens saw '()))
               (sql
                (format "SELECT token_id FROM tokens WHERE ~A;"
                        (string-join (make-list (length tokens) "token = ?")

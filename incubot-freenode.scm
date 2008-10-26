@@ -12,6 +12,6 @@
                       user: "incubot"
                       password: ""
                       real-name: "Incubus Robot")
-                     "#justplay"
+                     "#scheme"
                      2)))
   (incubot-connect! bot))
