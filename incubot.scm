@@ -18,4 +18,5 @@
   maximum-length)
  (include "analysis.scm")
  (include "dispatch.scm")
+ (include "log.scm")
  (include "bot.scm"))

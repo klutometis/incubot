@@ -21,7 +21,8 @@
 (define (incubot-connect! incubot)
   (let ((connection (irc:connect (incubot-connection incubot)))
         (channel (incubot-channel incubot))
-        (timeout (incubot-timeout incubot)))
+        (timeout (incubot-timeout incubot))
+        (db (incubot-db incubot)))
     (let ((nick (irc:connection-nick connection)))
       (let ((handle
              (lambda (message)
@@ -36,12 +37,20 @@
                           (cut irc:say connection <> destination)
                           body
                           timeout)
-                         (irc:say
-                          connection
-                          (string-join
-                           (interesting-tokens (message-body message)
-                                               (list nick)))
-                          destination))))))))
+                         (let ((interesting-tokens
+                                (interesting-tokens
+                                 body
+                                 (list nick))))
+                           (log-tokens
+                            db
+                            sender
+                            interesting-tokens
+                            body)
+                           (irc:say
+                            connection
+                            (string-join
+                             interesting-tokens)
+                            destination)))))))))
         (irc:join connection channel)
         (irc:add-message-handler!
          connection
