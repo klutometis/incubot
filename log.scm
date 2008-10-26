@@ -9,16 +9,13 @@
     (insert/last-id db insert parameter))))
 
 (define (log-tokens db author tokens saw)
-  (debug author tokens saw)
-  (let* ((count-saws
-          (sqlite3:prepare
+  (let ((saws
+         (condition-case
+          (sqlite3:first-result
            db
-           "SELECT count(*) FROM saws WHERE saw = ? LIMIT 1;"))
-         (saws
-          (condition-case
-           (sqlite3:first-result count-saws saw)
-           ((exn sqlite3) 0))))
-    (debug saws)
+           "SELECT count(*) FROM saws WHERE saw = ? LIMIT 1;"
+           saw)
+          ((exn sqlite3) 0))))
     (if (zero? saws)
         (let* ((insert-saw
                 (sqlite3:prepare
@@ -26,7 +23,6 @@
                  "INSERT INTO saws (saw) VALUES(?);"))
                (saw-id
                 (insert/last-id db insert-saw saw)))
-          (debug saw-id)
           (let* ((select-token
                   (sqlite3:prepare
                    db
@@ -39,7 +35,6 @@
                   (map (lambda (token)
                          (select-or-insert/id db select-token insert-token token))
                        tokens)))
-            (debug token-ids)
             (let ((insert-token-saw
                    (sqlite3:prepare
                     db
@@ -48,10 +43,9 @@
                (lambda (token-id)
                  (sqlite3:exec insert-token-saw token-id saw-id))
                token-ids)
-              (let ((insert-author
-                     (sqlite3:prepare
-                      db
-                      "INSERT INTO authors (author) VALUES(?);")))
-                (condition-case
-                 (sqlite3:exec insert-author author)
-                 ((exn sqlite3) 'author-exists)))))))))
+              (condition-case
+               (sqlite3:exec
+                db
+                "INSERT INTO authors (author) VALUES(?);"
+                author)
+               ((exn sqlite3) 'author-exists))))))))
