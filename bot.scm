@@ -18,45 +18,52 @@
         (car match)
         match)))
 
+(define (sorted-token-ids db tokens)
+  (let* ((select-token
+          (sqlite3:prepare
+           db
+           "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
+         (token-ids
+          (map
+           (lambda (token)
+             (condition-case
+              (sqlite3:first-row
+               select-token
+               token)
+              ((exn sqlite3) #f)))
+           tokens))
+         (filtered-token-ids
+          (filter values token-ids)))
+    (sort filtered-token-ids > cadr)))
+
+(define (saw-ids db sorted-token-ids)
+  (let ((token-id
+         (car
+          (list-ref sorted-token-ids
+                    (log-variate-integer
+                     (length sorted-token-ids))))))
+    (sqlite3:map-row
+     values
+     db
+     "SELECT saw_id FROM token_saws WHERE token_id = ?;"
+     token-id)))
+
 (define (exchange-saw db tokens)
   (if (null? tokens)
       #f
-      (let* ((select-token
-              (sqlite3:prepare
-               db
-               "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
-             (token-ids
-              (map
-               (lambda (token)
-                 (condition-case
-                  (sqlite3:first-row
-                   select-token
-                   token)
-                  ((exn sqlite3) #f)))
-               tokens))
-             (filtered-token-ids
-              (filter values token-ids))
-             (sorted-token-ids
-              (sort filtered-token-ids > cadr)))
+      (let ((sorted-token-ids (sorted-token-ids db tokens)))
         (if (null? sorted-token-ids)
             #f
-            (let* ((token-id
-                    (car
-                     (list-ref sorted-token-ids
-                               (log-variate-integer
-                                (length sorted-token-ids)))))
-                   (saw-ids
-                    (sqlite3:map-row
-                     values
-                     db
-                     "SELECT saw_id FROM token_saws WHERE token_id = ?;"
-                     token-id)))
+            (let ((saw-ids (saw-ids db sorted-token-ids)))
               (if (null? saw-ids)
                   #f
-                  (sqlite3:first-result
-                   db
-                   "SELECT saw FROM saws WHERE saw_id = ? LIMIT 1;"
-                   (list-ref saw-ids (random-integer (length saw-ids))))))))))
+                  (let ((random-saw-id
+                         (list-ref saw-ids (random-integer
+                                            (length saw-ids)))))
+                    (sqlite3:first-result
+                     db
+                     "SELECT saw FROM saws WHERE saw_id = ? LIMIT 1;"
+                     random-saw-id))))))))
 
 (define (useful-parameters message channel nick)
   (let ((receiver (irc:message-receiver message))
