@@ -56,7 +56,6 @@
                       (list-ref filtered-tokens
                                 (log-variate-integer
                                  (length sorted-tokens))))))
-            (debug sorted-tokens)
             (if interesting-token
                 (let* ((token-id (caadr interesting-token))
                        (saw-ids (sqlite3:map-row values saw-ids token-id)))
