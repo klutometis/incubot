@@ -18,3 +18,6 @@
 * Need uidbasics to get host-name resolution; also resolv.conf?
 
 * Need a permission-dropper (within bot?).
+
+* Just grep the fucking saw-file! (Takes ~15 seconds per query; find
+  another way to defer work?)

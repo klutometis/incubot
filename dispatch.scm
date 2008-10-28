@@ -22,7 +22,7 @@
 
 (define (dispatch say string timeout)
   (let-values (((stdout stdin id stderr)
-                (process* "./read")))
+                (process* "./incubot-read")))
     (let ((thread
            (thread-start!
             (lambda ()

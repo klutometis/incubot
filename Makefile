@@ -1,10 +1,10 @@
-all: incubot.so read incubot-localhost
+all: incubot.so incubot-read incubot-localhost
 
-incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm read
+incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm incubot-read
 	csc -s incubot.scm
 
-read: read.scm
-	csc read.scm
+incubot-read: incubot-read.scm
+	csc incubot-read.scm
 
 incubot-freenode: incubot-freenode.scm incubot.so
 	csc incubot-freenode.scm
