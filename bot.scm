@@ -48,6 +48,24 @@
      "SELECT saw_id FROM token_saws WHERE token_id = ?;"
      token-id)))
 
+;;; Can be expanded to delete every instance of nicks; but that limits
+;;; our vocabulary by certain important words, videlicet "actor".
+(define (delete-vocative db saw)
+  (let ((tokens (string-tokenize saw)))
+    (if (null? tokens)
+        saw
+        (let* ((nick (string-filter char-set:nick (car tokens)))
+               (author-id
+                (condition-case
+                 (sqlite3:first-result
+                  db
+                  "SELECT author_id FROM authors WHERE author = ? LIMIT 1;"
+                  nick)
+                 ((exn sqlite3) #f))))
+          (if author-id
+              (string-join (cdr tokens))
+              saw)))))
+
 (define (exchange-saw db tokens)
   (if (null? tokens)
       #f
@@ -57,13 +75,15 @@
             (let ((saw-ids (saw-ids db sorted-token-ids)))
               (if (null? saw-ids)
                   #f
-                  (let ((random-saw-id
-                         (list-ref saw-ids (random-integer
-                                            (length saw-ids)))))
-                    (sqlite3:first-result
-                     db
-                     "SELECT saw FROM saws WHERE saw_id = ? LIMIT 1;"
-                     random-saw-id))))))))
+                  (let* ((random-saw-id
+                          (list-ref saw-ids (random-integer
+                                             (length saw-ids))))
+                         (saw
+                          (sqlite3:first-result
+                           db
+                           "SELECT saw FROM saws WHERE saw_id = ? LIMIT 1;"
+                           random-saw-id)))
+                    (delete-vocative db saw))))))))
 
 (define (useful-parameters message channel nick)
   (let ((receiver (irc:message-receiver message))
@@ -113,7 +133,7 @@
        (cut intercourse! <> connection channel timeout db nick)
        command: "PRIVMSG"
        body: nick)
-      ;; Since handle doesn't return #f, log-saw should not be
+      ;; Since intercourse! doesn't return #f, log-saw should not be
       ;; invoked when handle is.
       (irc:add-message-handler!
        connection

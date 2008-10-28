@@ -7,8 +7,12 @@
 
 (define min-length 3)
 
-(define (process-token token)
-  (string-downcase (string-filter char-set:letter token)))
+(define char-set:special
+  (char-set #\- #\[ #\] #\| #\\ #\` #\^ #\{ #\}))
+
+(define char-set:nick
+  (char-set-union char-set:letter+digit
+                  char-set:special))
 
 (define (filter-token token)
   (> (string-length token) min-length))
@@ -17,9 +21,9 @@
   (lset-difference
    string=?
    (delete-duplicates
-    (map process-token
+    (map string-downcase
          (filter filter-token
-                 (string-tokenize saw char-set:letter))))
+                 (string-tokenize saw char-set:letter+digit))))
    stop-words))
 
 (define (analyse saw . stop-words)
