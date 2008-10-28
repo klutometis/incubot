@@ -16,3 +16,5 @@
   (available compiled via strings).
 
 * Need uidbasics to get host-name resolution; also resolv.conf?
+
+* Need a permission-dropper (within bot?).
