@@ -1,3 +1,5 @@
+all: incubot.so read incubot-localhost
+
 incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm read
 	csc -s incubot.scm
 
@@ -7,7 +9,7 @@ read: read.scm
 incubot-freenode: incubot-freenode.scm incubot.so
 	csc incubot-freenode.scm
 
-incubot-localhost: incubot-freenode.scm incubot.so
+incubot-localhost: incubot-localhost.scm incubot.so
 	csc incubot-localhost.scm
 
 prob:

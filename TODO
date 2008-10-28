@@ -1,13 +1,16 @@
-Must redo index to include numbers; otherwise: rnrs, excluded,
-etc. Redo it, however, by loading all tokens into an in-memory
-hash-table; similarly with all saws (if possible). Do the correlation
-thus and output to a space-delimited file of token-saws; read that
-with sqlite3 via .import (minimize database work from scheme to live
-stuff).
+* Must redo index to include numbers; otherwise: rnrs, excluded,
+  etc. Redo it, however, by loading all tokens into an in-memory
+  hash-table; similarly with all saws (if possible). Do the correlation
+  thus and output to a space-delimited file of token-saws; read that
+  with sqlite3 via .import (minimize database work from scheme to live
+  stuff).
 
-In fact, use scheme to do the tokenizing; use sort and uniq with
-count; awk to munge the columns; and finally sqlite .import to bring
-them in.
+  In fact, use scheme to do the tokenizing; use sort and uniq with
+  count; awk to munge the columns; and finally sqlite .import to bring
+  them in.
 
-Similarly with saws; use awk to increment a saw_id in the first
-column. Delimeter? Maybe tab; maybe other control character.
+  Similarly with saws; use awk to increment a saw_id in the first
+  column. Delimeter? Maybe tab; maybe other control character.
+
+* Ask for irc password on command line; store naught in .scm
+  (available compiled via strings).
