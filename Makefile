@@ -4,7 +4,7 @@ incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm incubot-read
 	csc -s incubot.scm
 
 incubot-read: incubot-read.scm
-	csc incubot-read.scm
+	csc -static incubot-read.scm
 
 incubot-freenode: incubot-freenode.scm incubot.so
 	csc incubot-freenode.scm
