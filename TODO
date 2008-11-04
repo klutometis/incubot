@@ -21,3 +21,6 @@
 
 * Just grep the fucking saw-file! (Takes ~15 seconds per query; find
   another way to defer work?)
+
+* Statically compile some SRFIs into incubot-read? Can't unless the
+  eggs have been prepared statically, methinks.
