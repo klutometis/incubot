@@ -24,3 +24,5 @@
 
 * Statically compile some SRFIs into incubot-read? Can't unless the
   eggs have been prepared statically, methinks.
+
+* Cleanse environment variables before heading into chroot.
