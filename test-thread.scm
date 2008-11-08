@@ -1,3 +1,4 @@
+;;; Copyright (C) 2008, Peter Danenberg
 (require-extension
  (srfi 18 27))
 (define (make-timer time thunk)

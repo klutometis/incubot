@@ -1,3 +1,4 @@
+;;; Copyright (C) 2008, Peter Danenberg
 (define (insert/last-id db insert parameter)
   (sqlite3:exec insert parameter)
   (sqlite3:last-insert-rowid db))

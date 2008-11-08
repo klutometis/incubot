@@ -1,3 +1,4 @@
+;;; Copyright (C) 2008, Peter Danenberg
 (define-record-type :incubot
   (make-incubot db connection channel timeout)
   incubot?

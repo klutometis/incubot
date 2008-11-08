@@ -1,3 +1,4 @@
+;;; Copyright (C) 2008, Peter Danenberg
 (define-syntax debug
   (syntax-rules ()
     ((_ x ...)

@@ -1,3 +1,4 @@
+;;; Copyright (C) 2008, Peter Danenberg
 (define (thread-start/timeout! timeout flag thread)
   (let ((thread (thread-start! thread)))
     (let ((join (thread-join! thread timeout flag)))
