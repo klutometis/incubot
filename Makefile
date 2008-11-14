@@ -1,6 +1,6 @@
 all: incubot.so incubot-read incubot-localhost
 
-incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm incubot-read
+incubot.so: incubot.scm analysis.scm dispatch.scm bot.scm
 	csc -s incubot.scm
 
 incubot-read: incubot-read.scm
