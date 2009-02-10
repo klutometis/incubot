@@ -26,3 +26,6 @@
   eggs have been prepared statically, methinks.
 
 * Cleanse environment variables before heading into chroot.
+
+* Second daemon with db-write permissions listens to channel and does
+  update, without compromising chroot.
