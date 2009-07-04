@@ -9,6 +9,14 @@
   12:46 < incubot> ML can be very fast in the right circumstances
 
   for instance, flowers would remain interesting.
+** TODO the contex is a token associated with a timestamp; on subsequent
+   saws: apply the decay (say one count per second delta); and shuffle
+   the token in with the rest.
+
+   for simplicity's sake: one context token? heuristics: an optimal
+   sentence combines the context token with some new, interesting
+   token. if unsuccessful: context token shuffled in with other
+   tokens.
 * Must redo index to include numbers; otherwise: rnrs, excluded,
   etc. Redo it, however, by loading all tokens into an in-memory
   hash-table; similarly with all saws (if possible). Do the correlation
