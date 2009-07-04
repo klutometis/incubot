@@ -1,3 +1,14 @@
+# -*- mode: org; -*-
+* TODO context decay; in which interesting memes lingers between saws,
+  and decay at a certain half life (i.e. they're effective count goes
+  up until irrelevant); that way, they compete with subsequent memes.
+
+  12:46 < TimMc> incubot: Where have all the flowers gone?
+  12:46 < incubot> black and white flowers
+  12:46 < TimMc> incubot: Yes, the very ones!
+  12:46 < incubot> ML can be very fast in the right circumstances
+
+  for instance, flowers would remain interesting.
 * Must redo index to include numbers; otherwise: rnrs, excluded,
   etc. Redo it, however, by loading all tokens into an in-memory
   hash-table; similarly with all saws (if possible). Do the correlation
