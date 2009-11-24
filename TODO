@@ -17,7 +17,7 @@
    sentence combines the context token with some new, interesting
    token. if unsuccessful: context token shuffled in with other
    tokens.
-* Must redo index to include numbers; otherwise: rnrs, excluded,
+* TODO Must redo index to include numbers; otherwise: rnrs, excluded,
   etc. Redo it, however, by loading all tokens into an in-memory
   hash-table; similarly with all saws (if possible). Do the correlation
   thus and output to a space-delimited file of token-saws; read that
@@ -30,21 +30,24 @@
 
   Similarly with saws; use awk to increment a saw_id in the first
   column. Delimeter? Maybe tab; maybe other control character.
-
-* Ask for irc password on command line; store naught in .scm
+* DONE Ask for irc password on command line; store naught in .scm
+  CLOSED: [2009-11-24 Tue 12:25]
   (available compiled via strings).
-
-* Need uidbasics to get host-name resolution; also resolv.conf?
-
-* Need a permission-dropper (within bot?).
-
-* Just grep the fucking saw-file! (Takes ~15 seconds per query; find
+* DONE Need uidbasics to get host-name resolution; also resolv.conf?
+  CLOSED: [2009-11-24 Tue 12:25]
+  - CLOSING NOTE [2009-11-24 Tue 12:25] \\
+    pre-jail
+* DONE Need a permission-dropper (within bot?).
+  CLOSED: [2009-11-24 Tue 12:26]
+  - CLOSING NOTE [2009-11-24 Tue 12:26] \\
+    yes
+* TODO Just grep the fucking saw-file! (Takes ~15 seconds per query; find
   another way to defer work?)
-
-* Statically compile some SRFIs into incubot-read? Can't unless the
+* DONE Statically compile some SRFIs into incubot-read? Can't unless the
+  CLOSED: [2009-11-24 Tue 12:26]
+  - CLOSING NOTE [2009-11-24 Tue 12:26] \\
+    those which are static
   eggs have been prepared statically, methinks.
-
-* Cleanse environment variables before heading into chroot.
-
-* Second daemon with db-write permissions listens to channel and does
+* TODO Cleanse environment variables before heading into chroot.
+* TODO Second daemon with db-write permissions listens to channel and does
   update, without compromising chroot.
