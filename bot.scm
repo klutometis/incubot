@@ -14,21 +14,21 @@
         parameters)))
 
 (define (sexp body)
-  (let ((match (string-match (regexp "\\(.*\\)") body)))
+  (let ((match (string-match ".*\\(.*\\)" body)))
     (if match
         (car match)
         match)))
 
 (define (sorted-token-ids db tokens)
   (let* ((select-token
-          (sqlite3:prepare
+          (prepare
            db
            "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
          (token-ids
           (map
            (lambda (token)
              (condition-case
-              (sqlite3:first-row
+              (first-row
                select-token
                token)
               ((exn sqlite3) #f)))
@@ -43,7 +43,7 @@
           (list-ref sorted-token-ids
                     (log-variate-integer
                      (length sorted-token-ids))))))
-    (sqlite3:map-row
+    (map-row
      values
      db
      "SELECT saw_id FROM token_saws WHERE token_id = ?;"
@@ -58,7 +58,7 @@
         (let* ((nick (string-filter char-set:nick (car tokens)))
                (author-id
                 (condition-case
-                 (sqlite3:first-result
+                 (first-result
                   db
                   "SELECT author_id FROM authors WHERE author = ? LIMIT 1;"
                   nick)
@@ -80,7 +80,7 @@
                           (list-ref saw-ids (random-integer
                                              (length saw-ids))))
                          (saw
-                          (sqlite3:first-result
+                          (first-result
                            db
                            "SELECT saw FROM saws WHERE saw_id = ? LIMIT 1;"
                            random-saw-id)))
@@ -97,6 +97,7 @@
 (define (intercourse! message connection channel timeout db nick)
   (let-values (((receiver sender body destination)
                 (useful-parameters message channel nick)))
+    (debug (sexp body))
     (if (sexp body)
         (dispatch
          (cut irc:say connection <> destination)
@@ -136,10 +137,12 @@
        body: nick)
       ;; Since intercourse! doesn't return #f, log-saw should not be
       ;; invoked when handle is.
+      #;
       (irc:add-message-handler!
        connection
        (cut log-saw! <> connection channel timeout db nick)
        command: "PRIVMSG")
+      #;
       (start-ping! connection nick)
       (irc:run-message-loop
        connection

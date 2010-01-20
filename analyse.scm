@@ -1,6 +1,5 @@
 ;;; Copyright (C) 2008, Peter Danenberg
 (require-extension
- syntax-case
  srfi-27)
 (require 'incubot)
 (import incubot)

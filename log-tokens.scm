@@ -9,9 +9,9 @@
   (syntax-rules ()
     ((_ x ...)
      (print `((x ,x) ...)))))
-(let ((db (sqlite3:open "log.db")))
+(let ((db (open-database "log.db")))
   (let ((insert-token
-         (sqlite3:prepare
+         (prepare
           db
           "INSERT INTO tokens (token, token_count) VALUES(?, ?);")))
     (loop
@@ -25,4 +25,4 @@
        (if match
            (let ((token-count (cadr match))
                  (token (caddr match)))
-             (sqlite3:exec insert-token token token-count)))))))
+             (execute insert-token token token-count)))))))

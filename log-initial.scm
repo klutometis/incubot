@@ -19,29 +19,29 @@
   (map process-token
        (filter filter-token
                (string-tokenize saw char-set:letter))))
-(let ((db (sqlite3:open "log.db")))
+(let ((db (open-database "log.db")))
   (let ((insert-saw
-         (sqlite3:prepare
+         (prepare
           db
           "INSERT INTO saws (saw) VALUES(?);"))
         (insert-token
-         (sqlite3:prepare
+         (prepare
           db
           "INSERT INTO tokens (token) VALUES(?);"))
         (insert-token-saw
-         (sqlite3:prepare
+         (prepare
           db
           "INSERT INTO token_saws (token_id, saw_id) VALUES(?, ?);"))
         (select-token
-         (sqlite3:prepare
+         (prepare
           db
           "SELECT token_id FROM tokens WHERE token = ? LIMIT 1;"))
         (select-saw
-         (sqlite3:prepare
+         (prepare
           db
           "SELECT saw_id FROM saws WHERE saw = ? LIMIT 1;"))
         (count-token-saws
-         (sqlite3:prepare
+         (prepare
           db
           "SELECT count(*) FROM token_saws WHERE token_id = ? AND saw_id = ?;"))
         )
@@ -52,28 +52,28 @@
        (if match
            (let* ((saw (cadr match))
                   (tokens (interesting-tokens saw)))
-             (sqlite3:with-transaction
+             (with-transaction
               db
               (lambda ()
                 (let ((saw-id
                        (condition-case
                         (begin
-                          (sqlite3:exec insert-saw saw)
-                          (sqlite3:last-insert-rowid db))
+                          (execute insert-saw saw)
+                          (last-insert-rowid db))
                         ((exn sqlite3)
-                         (sqlite3:first-result select-saw saw)))))
+                         (first-result select-saw saw)))))
                   (for-each
                    (lambda (token)
                      (let ((token-id
                             (condition-case
                              (begin
-                               (sqlite3:exec insert-token token)
-                               (sqlite3:last-insert-rowid db))
+                               (execute insert-token token)
+                               (last-insert-rowid db))
                              ((exn sqlite3)
-                              (sqlite3:first-result select-token token)))))
+                              (first-result select-token token)))))
                        (if (zero?
-                            (sqlite3:first-result count-token-saws
+                            (first-result count-token-saws
                                                   saw-id
                                                   token-id))
-                           (sqlite3:exec insert-token-saw saw-id token-id))))
+                           (execute insert-token-saw saw-id token-id))))
                    tokens))))))))))

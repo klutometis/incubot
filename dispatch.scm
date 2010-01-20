@@ -22,20 +22,24 @@
          output)))
 
 (define (dispatch say string timeout)
+  (debug 'dispatch say string timeout)
   (let-values (((stdout stdin id stderr)
-                (process* "/incubot-read" '())))
+                (process* "./incubot-read" '())))
     (let ((thread
            (thread-start!
             (lambda ()
+              (debug 'thread-start! string)
               (display string stdin)
               (close-output-port stdin)
               (let ((output
                      (loop ((for next-line (in-port stdout read-line))
                             (with line #!eof next-line))
-                           => line))
+                           => line
+                           (debug line)))
                     (error (read-line stderr)))
                 (close-input-port stdout)
                 (close-input-port stderr)
+                (debug error output)
                 (cond ((interesting? error)
                        (say (process-output error)))
                       ((interesting? output)

@@ -28,16 +28,16 @@
    stop-words))
 
 (define (analyse saw . stop-words)
-  (let ((db (sqlite3:open "log.db"))
+  (let ((db (open-database "log.db"))
         (tokens (interesting-tokens saw)))
     (if (null? interesting-tokens)
         'bored
         (let ((id-count
-               (sqlite3:prepare
+               (prepare
                 db
                 "SELECT token_id, token_count FROM tokens WHERE token = ? LIMIT 1;"))
               (saw-ids
-               (sqlite3:prepare
+               (prepare
                 db
                 "SELECT saw_id FROM token_saws WHERE token_id = ?;")))
           (let* ((token-counts
@@ -46,7 +46,7 @@
                    (map
                     (lambda (token)
                       (condition-case
-                       (sqlite3:first-row id-count token)
+                       (first-row id-count token)
                        ((exn sqlite3) #f)))
                     tokens)))
                  (filtered-tokens (filter cadr token-counts))
@@ -59,7 +59,7 @@
                                  (length sorted-tokens))))))
             (if interesting-token
                 (let* ((token-id (caadr interesting-token))
-                       (saw-ids (sqlite3:map-row values saw-ids token-id)))
+                       (saw-ids (map-row values saw-ids token-id)))
                   (if (null? saw-ids)
                       'sawless
                       saw-ids))

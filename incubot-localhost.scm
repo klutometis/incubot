@@ -1,12 +1,11 @@
 ;;; Copyright (C) 2008, Peter Danenberg
-(require-extension
- syntax-case
+(use
  sqlite3
  irc)
 (require 'incubot)
 (import incubot)
 (let ((bot
-       (make-incubot (sqlite3:open "log.db")
+       (make-incubot (open-database "log.db")
                      (irc:connection
                       server: "localhost"
                       nick: "incubot"

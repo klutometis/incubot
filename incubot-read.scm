@@ -1,4 +1,6 @@
 ;;; Copyright (C) 2008, Peter Danenberg
+(import scheme chicken)
+(use data-structures)
 (let iter ((value (read)))
   (if (eof-object? value)
       value
