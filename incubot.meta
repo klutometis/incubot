@@ -1,0 +1,12 @@
+((egg "incubot.egg")
+ (needs sqlite3 irc foof-loop records format debug)
+ (license "GPL-3")
+ (test-depends test)
+ (author "Peter Danenberg")
+ (synopsis "Incubot is a #scheme-toy-cum-Chicken-REPL; as a bonus, it indexes circa four years of conversations for a little stochastic feedback.")
+ (files "incubot.scm"
+        "incubot-read.scm"
+        "analysis.scm"
+        "dispatch.scm"
+        "log.scm"
+        "bot.scm"))

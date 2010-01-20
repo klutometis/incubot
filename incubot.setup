@@ -1,0 +1,7 @@
+;;; -*- Hen -*-
+(include "setup-helper")
+(verify-extension-name "incubot")
+(compile -static "incubot-read.scm")
+(setup-shared-extension-module
+ 'incubot
+ (extension-version 0.1))

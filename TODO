@@ -1,4 +1,7 @@
 # -*- mode: org; -*-
+* DONE package incubot as a library
+  CLOSED: [2010-01-20 Wed 03:48]
+* TODO enable .setup-based static compilation of incubot-read
 * TODO context decay; in which interesting memes lingers between saws,
   and decay at a certain half life (i.e. they're effective count goes
   up until irrelevant); that way, they compete with subsequent memes.
