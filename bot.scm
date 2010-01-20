@@ -97,7 +97,6 @@
 (define (intercourse! message connection channel timeout db nick)
   (let-values (((receiver sender body destination)
                 (useful-parameters message channel nick)))
-    (debug (sexp body))
     (if (sexp body)
         (dispatch
          (cut irc:say connection <> destination)
